@@ -4,29 +4,31 @@ from fastapi import FastAPI
 import uvicorn
 
 import database
-import operations
+import Data
 
 app = FastAPI()
 
 @app.get("/read/All")
 async def readAll():
-    return operations.readAll()
-@app.get("/read")
-async def read(id):
-    return operations.read(id)
+    return Data.readAll()
 
+@app.get("/read")
+async def readItem(id):
+    return Data.readItem(id)
+
+#description is optional field
 @app.post("/create")
 async def create(name:str,price:float,description:Union[str,None]=None):
+    return Data.create(name, description, price)
 
-    return operations.create(name,description,price)
-
+#name, description, price are optional fields
 @app.put("/update")
 async def update(id,name:Union[str,None]=None,description:Union[str,None]=None,price:Union[float,None]=None):
-    return operations.update(id,name,description,price)
+    return Data.update(id, name, description, price)
 
 @app.delete("/delete")
 async def delete(id):
-    return operations.delete(id)
+    return Data.delete(id)
 
 
 
